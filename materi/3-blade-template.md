@@ -24,14 +24,8 @@ Sama seperti pada materi OOP untuk membuat class child dari sebuah class lain ya
 Untuk mengisi slot **'content'** pada halaman **index.blade.php**, kita gunakan sintaks `@section('content')` . Namun sintaks section memiliki sintaks penutupnya yaitu `@endsection` .
 Di antara pembuka `@section('content')` dan penutup `@endsection` kita bisa sisipkan konten dari halaman index, misalkan kita isi dengan `<table>`.
 
-![template-with-include](asset/include.png)
-
-Selain Dengan layout sebelumnya kita juga dapat memanfaatkan `@include`, sehingga akan membuat **master.blade.php** akan lebih simpel, dikarenakan memecah navbar kedalam satu file **navbar.blade.php** dan sidebar satu file **sidebar.blade.php**, maka file **master.blade.php** akan menjadi seperti dibawah ini:
-![master-include](asset/include=master.png)
-
 ### Layouts Using Template Inheritance
 
-<a name="defining-a-layout"></a>
 #### Defining A Layout
 
 Untuk memulai, lihat contoh dibawah ini, Pertama, kita akan memeriksa tata letak dari halaman. Karena sebagian besar aplikasi web mempertahankan tata letak umum yang sama di berbagai halaman, akan lebih mudah untuk mendefinisikan tata letak ini sebagai satu tampilan Blade:
@@ -44,6 +38,14 @@ Untuk memulai, lihat contoh dibawah ini, Pertama, kita akan memeriksa tata letak
         <title>App Name - @yield('title')</title>
     </head>
     <body>
+        <navbar>
+            <ul>
+                <li>Menu 1</li>
+                <li>Menu 2</li>
+                <li>Menu 3</li>
+            </ul>
+        </navbar>
+
         @section('sidebar')
             This is the master sidebar.
         @show
@@ -90,6 +92,51 @@ Direktif `@yield` juga menerima nilai default sebagai parameter kedua. Nilai ini
 
 ```blade
 @yield('content', 'Default content')
+```
+
+### Including Layout
+
+
+![template-with-include](asset/include.png)
+
+Selain Dengan layout sebelumnya kita juga dapat memanfaatkan `@include`, sehingga akan membuat **master.blade.php** akan lebih simpel, dikarenakan memecah navbar kedalam satu file **navbar.blade.php** dan sidebar satu file **sidebar.blade.php**, maka file **master.blade.php** akan menjadi seperti dibawah ini:
+![master-include](asset/include=master.png)
+
+Berikut adalah contoh menggunakan include :
+
+```blade
+<!-- resources/views/layouts/app.blade.php -->
+
+<html>
+    <head>
+        <title>App Name - @yield('title')</title>
+    </head>
+    <body>
+        
+        @include('navbar)
+
+        @section('sidebar')
+            This is the master sidebar.
+        @show
+
+        <div class="container">
+            @yield('content')
+        </div>
+    </body>
+</html>
+```
+
+```blade
+<!-- resources/views/layouts/navbar.blade.php -->
+
+<navbar>
+    <ul>
+        <li>Menu 1</li>
+        <li>Menu 2</li>
+        <li>Menu 3</li>
+    </ul>
+</navbar>
+
 ```
 
 ## Stacks
